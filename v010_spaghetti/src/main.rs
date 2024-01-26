@@ -1,4 +1,4 @@
-fn main() {
+fn main() -> anyhow::Result<()>{
     use std::io::{self, BufRead};
 
     let stdin = io::stdin();
@@ -14,4 +14,5 @@ fn main() {
             }
         }
     }
+    Ok(())
 }
