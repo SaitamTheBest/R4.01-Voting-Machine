@@ -7,7 +7,21 @@ fn main() -> anyhow::Result<()>{
     for line in lines {
         match line {
             Ok(line_content) => {
-                println!("{}", line_content);
+                match line_content.as_str() {
+                    "voter" => {
+                        println!("Commande trouvé");
+                    }
+                    "votants" => {
+                        println!("Commande trouvé");
+                    }
+                    "scores" => {
+                        println!("Commande trouvé");
+                    }
+                    _ => {
+                        println!("Commande inconnue");
+                    }
+
+                }
             }
             Err(err) => {
                 eprintln!("Erreur de lecture: {}", err);
