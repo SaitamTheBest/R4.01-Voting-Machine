@@ -3,7 +3,9 @@
   <component name="NewModuleRootManager">
     <content url="file://$MODULE_DIR$">
       <sourceFolder url="file://$MODULE_DIR$/v010_spaghetti/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/v020_spaghetti/src" isTestSource="false" />
       <excludeFolder url="file://$MODULE_DIR$/v010_spaghetti/target" />
+      <excludeFolder url="file://$MODULE_DIR$/v020_spaghetti/target" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
