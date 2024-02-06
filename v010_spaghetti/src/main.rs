@@ -1,54 +1,81 @@
+use std::io::{self, BufRead};
+use std::collections::{BTreeMap as Map, BTreeMap, BTreeSet};
 
-
-fn main() -> anyhow::Result<()>{
-    use std::io::{self, BufRead};
-
-    let mut votants : Vec<&str> = vec![];
-    let mut scores : Vec<&str> = vec![];
-
+fn main() {
     let stdin = io::stdin();
-    let lines = stdin.lock().lines();
+    let handle = stdin.lock().lines();
+    let mut list_votants : BTreeSet<String> = BTreeSet::new();
+    let mut scores:BTreeMap<String,i32> = Map::new();
 
-    println!("Commandes valides :");
-    println!("- \"voter Tux NixOS\" : Tux vote pour NixOS");
-    println!("- \"voter Tux\" : Tux vote blanc");
-    println!("- \"votants\" : affiche la liste des votants");
-    println!("- \"scores\" : affiche les scores pour tous les candidats");
-
-    for line in lines {
+    for line in handle {
         match line {
-            Ok(line_content) => {
-                let mut vector = vec![];
-                vector = line_content.as_str().split_whitespace().collect();
-                match vector[0] {
-                    "voter" => {
-                        if vector.len()==2 {
-                            votants.push(vector[1]);
-                            scores.push(vector[2]);
+            Ok(text) => {
+                if text.is_empty() {
+                    println!("- \"voter Tux NixOS\" : Tux vote pour NixOS");
+                    println!("- \"voter Tux\" : Tux vote blanc");
+                    println!("- \"votants\" : affiche la liste des votants");
+                    println!("- \"scores\" : affiche les scores pour tous les candidats");
+                    continue;
+                }
+
+                let command: Vec<&str> = text.split_whitespace().collect();
+
+                match command.as_slice() {
+                    ["voter", votant] => {
+                        let mut deja_vote = false;
+                        for votants in &list_votants{
+                            if *votants == votant.to_string(){
+                                deja_vote = true;
+                            }
+                        }
+                        if deja_vote {
+                            println!("Cet utilisateur a déjà voter !")
                         }
                         else {
-                            votants.push(vector[1]);
+                            list_votants.insert(votant.to_string());
+                            println!("{} a voté blanc", votant);
                         }
-                        println!("Commande trouvé");
                     }
-                    "votants" => {
-                        println!("{:?}",votants);
-                        println!("Commande trouvé");
+                    ["voter", votant, candidat_votant] => {
+                        let mut deja_vote = false;
+                        for votants in &list_votants{
+                            if *votants == votant.to_string(){
+                                deja_vote = true;
+                            }
+                        }
+                        if deja_vote {
+                            println!("Cet utilisateur a déjà voter !")
+                        }
+                        else {
+                            list_votants.insert(votant.to_string());
+                            let score = scores.entry(candidat_votant.to_string()).or_insert(0);
+                            *score += 1;
+                            println!("{} a voté pour {}.", votant, candidat_votant);
+                        }
                     }
-                    "scores" => {
-                        println!("{:?}",scores);
-                        println!("Commande trouvé");
+                    ["votants"] => {
+                        for votant in &list_votants {
+                            println!("{}", votant);
+                        }
+                    }
+                    ["scores"] => {
+                        if scores.is_empty(){
+                            println!("Aucune donnée entrée !")
+                        }
+                        else {
+                            for (candidat, score) in &scores {
+                                println!("{} : {}", candidat, score);
+                            }
+                        }
                     }
                     _ => {
-                        println!("Commande inconnue");
+                        eprintln!("Commande inconnue : {}", text);
                     }
-
                 }
             }
-            Err(err) => {
-                eprintln!("Erreur de lecture: {}", err);
+            Err(error) => {
+                eprintln!("Erreur de lecture : {}", error);
             }
         }
     }
-    Ok(())
 }
