@@ -17,12 +17,14 @@ pub struct Scoreboard{
     pub blank_score : Score,
     pub invalid_score : Score,
 }
-
+#[derive(Debug, Clone)]
 pub struct BallotPaper{
     pub voter : Voter,
     pub candidate : Option<Candidate>,
 }
 
+#[derive(PartialEq)]
+#[derive(Debug)]
 pub enum VoteOutcome{
     AcceptedVote(Voter,Candidate),
     BlankVote(Voter),
@@ -145,7 +147,7 @@ mod tests {
     }
     #[test]
     fn test3(){
-        let mut voterSet = Vec::new();
+        let voterSet = Vec::new();
         let mut votingMachine = VotingMachine::new(voterSet, vec![Candidate("matia".parse().unwrap())]);
         let ballotPaper = BallotPaper{
             voter: Voter("Lucas".to_string()),
@@ -155,7 +157,7 @@ mod tests {
     }
     #[test]
     fn test4(){
-        let mut voterSet = Vec::new();
+        let voterSet = Vec::new();
         let mut votingMachine = VotingMachine::new(voterSet, vec![Candidate("matia".parse().unwrap())]);
         let ballotPaper = BallotPaper{
             voter: Voter("Lucas".to_string()),
