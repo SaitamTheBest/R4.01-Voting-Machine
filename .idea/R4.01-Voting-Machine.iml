@@ -6,10 +6,12 @@
       <sourceFolder url="file://$MODULE_DIR$/v020_spaghetti/src" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/v021_spaghetti/src" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/v030_domain/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/v040_memory/src" isTestSource="false" />
       <excludeFolder url="file://$MODULE_DIR$/v010_spaghetti/target" />
       <excludeFolder url="file://$MODULE_DIR$/v020_spaghetti/target" />
       <excludeFolder url="file://$MODULE_DIR$/v021_spaghetti/target" />
       <excludeFolder url="file://$MODULE_DIR$/v030_domain/target" />
+      <excludeFolder url="file://$MODULE_DIR$/v040_memory/target" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
